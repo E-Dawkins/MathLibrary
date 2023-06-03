@@ -1,0 +1,2 @@
+#define TESTLIB_API __declspec(dllexport)
+#define TESTLIB_API __declspec(dllimport)
