@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Github\MathLibrary\x64\Debug\MathLibrary.dll</FullPath>
+      <FullPath>D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -1,0 +1,9 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(516,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+  LINK : D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary_d.dll not found or not built by the last incremental link; performing full link
+     Creating library D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary_d.lib and object D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary_d.exp
+  MathLibrary.vcxproj -> D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary_d.dll
+  D:\Github\MathLibrary\MathLibrary\framework.h -> D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\includes\framework.h
+  D:\Github\MathLibrary\MathLibrary\pch.h -> D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\includes\pch.h
+  D:\Github\MathLibrary\MathLibrary\Vector2.h -> D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\includes\Vector2.h
+  D:\Github\MathLibrary\MathLibrary\Vectors.h -> D:\Github\MathLibrary\temp\MathLibrary\x64\Debug\includes\Vectors.h
+  4 File(s) copied
