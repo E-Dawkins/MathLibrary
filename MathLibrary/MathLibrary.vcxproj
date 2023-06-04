@@ -170,6 +170,7 @@
     <ClInclude Include="defs.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Matrices.h" />
     <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Vector2.h" />

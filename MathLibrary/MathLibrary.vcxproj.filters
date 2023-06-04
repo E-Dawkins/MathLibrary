@@ -22,6 +22,9 @@
     <Filter Include="Source Files\UnitTests">
       <UniqueIdentifier>{08a4aefb-1b0c-4c21-aff5-ca3c4ead1687}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Matrices">
+      <UniqueIdentifier>{a2618db1-30d9-4742-8517-ba59d52d3eae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -45,11 +48,14 @@
     <ClInclude Include="Vector4.h">
       <Filter>Header Files\Vectors</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix2x2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Helpers.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix2x2.h">
+      <Filter>Header Files\Matrices</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrices.h">
+      <Filter>Header Files\Matrices</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
