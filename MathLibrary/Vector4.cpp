@@ -117,3 +117,17 @@ bool Vector4::operator!=(Vector4 _other)
 {
 	return x != _other.x || y != _other.y || z != _other.z || w != _other.w;
 }
+
+float& Vector4::operator[](int _index)
+{
+	if (_index < 0 || _index > 3)
+		throw std::out_of_range("Subscript index is out of range!");
+
+	switch (_index)
+	{
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+	}
+}

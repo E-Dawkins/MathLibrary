@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Vectors">
       <UniqueIdentifier>{43593e16-6f56-4d85-8fa7-2b253e18c61e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UnitTests">
+      <UniqueIdentifier>{08a4aefb-1b0c-4c21-aff5-ca3c4ead1687}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -50,17 +53,20 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="VectorTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files\Vectors</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Vectors</Filter>
     </ClCompile>
+    <ClCompile Include="VectorTests.cpp">
+      <Filter>Source Files\UnitTests</Filter>
+    </ClCompile>
     <ClCompile Include="Vector4.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Vectors</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixTests.cpp">
+      <Filter>Source Files\UnitTests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

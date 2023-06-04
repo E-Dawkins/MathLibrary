@@ -108,3 +108,16 @@ bool Vector3::operator!=(Vector3 _other)
 {
 	return x != _other.x || y != _other.y || z != _other.z;
 }
+
+float& Vector3::operator[](int _index)
+{
+	if (_index < 0 || _index > 2)
+		throw std::out_of_range("Subscript index is out of range!");
+
+	switch (_index)
+	{
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+	}
+}

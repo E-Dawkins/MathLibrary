@@ -34,4 +34,6 @@ public:
 
 	bool operator == (Vector4 _other);
 	bool operator != (Vector4 _other);
+
+	float& operator [] (int _index);
 };

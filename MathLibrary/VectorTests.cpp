@@ -91,6 +91,19 @@ namespace VECTORS
             Assert::IsFalse(tempVec == Vector2(3, 2));
             Assert::IsTrue(tempVec != Vector2(3, 2));
         }
+
+        TEST_METHOD(SUBSCRIPT)
+        {
+            Vector2 tempVec = Vector2(1.343f, 9.999f);
+            Assert::IsTrue(tempVec[0] == 1.343f && tempVec[1] == 9.999f);
+
+            tempVec[0] = 0.15f;
+            tempVec[1] = 1.2f;
+            Assert::IsTrue(tempVec[0] == 0.15f && tempVec[1] == 1.2f);
+
+            tempVec[0] = tempVec[1];
+            Assert::AreEqual(tempVec[0], 1.2f);
+        }
     };
 
     TEST_CLASS(VECTOR3)
@@ -177,6 +190,21 @@ namespace VECTORS
             Assert::IsFalse(tempVec == Vector3(3, 2, 1));
             Assert::IsTrue(tempVec != Vector3(3, 2, 1));
         }
+
+        TEST_METHOD(SUBSCRIPT)
+        {
+            Vector3 tempVec = Vector3(0.11f, 0.22f, 0.33f);
+            Assert::IsTrue(tempVec[0] == 0.11f && tempVec[1] == 0.22f && tempVec[2] == 0.33f);
+
+            tempVec[0] = 1.2f;
+            tempVec[1] = 2.2f;
+            tempVec[2] = 3.2f;
+            Assert::IsTrue(tempVec[0] == 1.2f && tempVec[1] == 2.2f && tempVec[2] == 3.2f);
+
+            tempVec[0] = tempVec[1];
+            tempVec[1] = tempVec[2];
+            Assert::IsTrue(tempVec[0] == 2.2f && tempVec[1] == 3.2f && tempVec[2] == 3.2f);
+        }
     };
 
     TEST_CLASS(VECTOR4)
@@ -262,6 +290,23 @@ namespace VECTORS
             Vector4 tempVec = Vector4(1, 2, 3, 4);
             Assert::IsFalse(tempVec == Vector4(4, 3, 2, 1));
             Assert::IsTrue(tempVec != Vector4(4, 3, 2, 1));
+        }
+
+        TEST_METHOD(SUBSCRIPT)
+        {
+            Vector4 tempVec = Vector4(1, 2, 3, 4);
+            Assert::IsTrue(tempVec[0] == 1 && tempVec[1] == 2 && tempVec[2] == 3 && tempVec[3] == 4);
+
+            tempVec[0] = 4;
+            tempVec[1] = 3;
+            tempVec[2] = 2;
+            tempVec[3] = 1;
+            Assert::IsTrue(tempVec[0] == 4 && tempVec[1] == 3 && tempVec[2] == 2 && tempVec[3] == 1);
+
+            tempVec[0] = tempVec[1];
+            tempVec[1] = tempVec[2];
+            tempVec[2] = tempVec[3];
+            Assert::IsTrue(tempVec[0] == 3 && tempVec[1] == 2 && tempVec[2] == 1 && tempVec[3] == 1);
         }
     };
 }

@@ -33,4 +33,6 @@ public:
 
 	bool operator == (Vector3 _other);
 	bool operator != (Vector3 _other);
+
+	float& operator [] (int _index);
 };

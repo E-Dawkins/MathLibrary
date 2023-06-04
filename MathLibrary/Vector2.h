@@ -32,4 +32,6 @@ public:
 
 	bool operator == (Vector2 _other);
 	bool operator != (Vector2 _other);
+
+	float& operator [] (int _index);
 };
