@@ -1,7 +1,6 @@
 #pragma once
 #include "defs.h"
 #include <iostream>
-#include "Vector3.h"
 
 class MATHLIBRARY_API Vector2
 {
