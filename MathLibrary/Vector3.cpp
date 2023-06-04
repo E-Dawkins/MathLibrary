@@ -1,5 +1,11 @@
+#pragma once
 #include "pch.h"
 #include "Vector3.h"
+#include "Helpers.h"
+
+Vector3 Vector3::zero = Vector3(0);
+Vector3 Vector3::one = Vector3(1);
+Vector3 Vector3::half = Vector3(0.5f);
 
 Vector3::Vector3()
 {
@@ -70,10 +76,7 @@ void Vector3::operator-=(float _value)
 	z -= _value;
 }
 
-Vector3 Vector3::operator*(float _multiplier)
-{
-	return Vector3(x * _multiplier, y * _multiplier, z * _multiplier);
-}
+
 
 void Vector3::operator*=(float _multiplier)
 {
@@ -92,6 +95,16 @@ void Vector3::operator/=(float _divisor)
 	x /= _divisor;
 	y /= _divisor;
 	z /= _divisor;
+}
+
+Vector3 operator*(float _multi, Vector3 _vec)
+{
+	return Vector3(_vec.x * _multi, _vec.y * _multi, _vec.z * _multi);
+}
+
+Vector3 operator*(Vector3 _vec, float _multi)
+{
+	return Vector3(_vec.x * _multi, _vec.y * _multi, _vec.z * _multi);
 }
 
 void operator<<(std::ostream& _os, const Vector3& _vector)
@@ -120,4 +133,66 @@ float& Vector3::operator[](int _index)
 		case 1: return y;
 		case 2: return z;
 	}
+
+	return x;
+}
+
+float Vector3::Magnitude()
+{
+	return sqrtf(powf(x, 2) + powf(y, 2) + powf(z, 2));
+}
+
+float Vector3::Magnitude(Vector3 _vector)
+{
+	return sqrtf(powf(_vector.x, 2) + powf(_vector.y, 2) + powf(_vector.z, 2));
+}
+
+Vector3 Vector3::Normalized()
+{
+	return *this / Magnitude();
+}
+
+Vector3 Vector3::Normalized(Vector3 _vector)
+{
+	return _vector / Magnitude(_vector);
+}
+
+float Vector3::Angle(Vector3 _other)
+{
+	float totalMagnitude = Magnitude() * _other.Magnitude();
+	float cosResult = Cross(_other) / totalMagnitude;
+	return Rad2Deg(acosf(cosResult));
+}
+
+float Vector3::Angle(Vector3 _to, Vector3 _from)
+{
+	float totalMagnitude = Magnitude(_to) * Magnitude(_from);
+	float cosResult = Cross(_to, _from) / totalMagnitude;
+	return Rad2Deg(acosf(cosResult));
+}
+
+float Vector3::Cross(Vector3 _other)
+{
+	return (x * _other.x) + (y * _other.y) + (z * _other.z);
+}
+
+float Vector3::Cross(Vector3 _a, Vector3 _b)
+{
+	return (_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z);
+}
+
+Vector3 Vector3::Lerp(Vector3 _from, Vector3 _to, float _t)
+{
+	float tClamp = (_t < 0 ? 0 : (_t > 1 ? 1 : _t));
+	return _from + (_to - _from) * tClamp;
+}
+
+float Vector3::Distance(Vector3 _a, Vector3 _b)
+{
+	return (_a - _b).Magnitude();
+}
+
+Vector3 Vector3::Reflect(Vector3 _inDirection, Vector3 _normal)
+{
+	return _inDirection - 2.f * Cross(_inDirection, _normal) * _normal;
 }

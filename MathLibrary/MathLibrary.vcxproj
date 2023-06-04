@@ -169,6 +169,8 @@
   <ItemGroup>
     <ClInclude Include="defs.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -177,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Matrix2x2.cpp" />
     <ClCompile Include="MatrixTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

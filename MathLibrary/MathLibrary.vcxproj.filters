@@ -45,6 +45,12 @@
     <ClInclude Include="Vector4.h">
       <Filter>Header Files\Vectors</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix2x2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -67,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="MatrixTests.cpp">
       <Filter>Source Files\UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix2x2.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
