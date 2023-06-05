@@ -25,6 +25,9 @@
     <Filter Include="Header Files\Matrices">
       <UniqueIdentifier>{a2618db1-30d9-4742-8517-ba59d52d3eae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Matrices">
+      <UniqueIdentifier>{985f7719-2fc2-48ce-97a4-faa762ae33be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -57,6 +60,9 @@
     <ClInclude Include="Matrices.h">
       <Filter>Header Files\Matrices</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix3x3.h">
+      <Filter>Header Files\Matrices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -81,7 +87,10 @@
       <Filter>Source Files\UnitTests</Filter>
     </ClCompile>
     <ClCompile Include="Matrix2x2.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Matrices</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix3x3.cpp">
+      <Filter>Source Files\Matrices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
