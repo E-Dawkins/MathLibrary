@@ -52,12 +52,14 @@ public:
 	float Determinant();
 	static float Determinant(Matrix3x3 _mat);
 
-	/*Matrix2x2 Inverse();
-	static Matrix2x2 Inverse(Matrix2x2 _mat);
+	Matrix3x3 Inverse();
+	static Matrix3x3 Inverse(Matrix3x3 _mat);
 
-	Matrix2x2 Transpose();
-	static Matrix2x2 Transpose(Matrix2x2 _mat);*/
+	Matrix3x3 Transpose();
+	static Matrix3x3 Transpose(Matrix3x3 _mat);
 
 protected:
 	std::vector<Vector3> m_rows;
+
+	float FindCofactor(int _row, int _col);
 };

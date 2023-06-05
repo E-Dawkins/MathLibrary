@@ -257,24 +257,25 @@ namespace MATRICES
 
 		TEST_METHOD(OSTREAM)
 		{
-			Matrix3x3 mat = Matrix3x3::identity;
+			Matrix3x3 mat = Matrix3x3(1, 2, 3, 4, 5, 6, 7, 8, 9);
 			std::ostringstream os;
 			os << mat;
-			Assert::AreEqual("(1, 0, 0, 0, 1, 0, 0, 0, 1)", os.str().c_str());
+			Assert::AreEqual("(1, 2, 3, 4, 5, 6, 7, 8, 9)", os.str().c_str());
 		}
 
 		TEST_METHOD(FUNCTIONS)
 		{
-			Matrix3x3 mat = Matrix3x3::identity;
-			Assert::IsTrue(mat.Determinant() == 8);
-			Assert::IsTrue(Matrix3x3::Determinant(mat) == 8);
+			Matrix3x3 mat = Matrix3x3::identity * 2;
+			Assert::AreEqual(8.f, mat.Determinant());
+			Assert::AreEqual(8.f, Matrix3x3::Determinant(mat));
 
-			/*mat = Matrix2x2(4, 7, 2, 6);
-			Assert::IsTrue(mat.Inverse() == Matrix3x3(0.6f, -0.7f, -0.2f, 0.4f));
-			Assert::IsTrue(Matrix3x3::Inverse(mat) == Matrix3x3(0.6f, -0.7f, -0.2f, 0.4f));
+			mat = Matrix3x3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+			Assert::IsTrue(mat.Transpose() == Matrix3x3(1, 4, 7, 2, 5, 8, 3, 6, 9));
+			Assert::IsTrue(Matrix3x3::Transpose(mat) == Matrix3x3(1, 4, 7, 2, 5, 8, 3, 6, 9));
 
-			Assert::IsTrue(mat.Transpose() == Matrix3x3(4, 2, 7, 6));
-			Assert::IsTrue(Matrix3x3::Transpose(mat) == Matrix3x3(4, 2, 7, 6));*/
+			mat = Matrix3x3(4, 5, 4, 3, 4, 5, 2, 3, 2);
+			Assert::IsTrue(mat.Inverse() == Matrix3x3(1.75f, -0.5f, -2.25f, -1, 0, 2, -0.25f, 0.5f, -0.25f));
+			Assert::IsTrue(Matrix3x3::Inverse(mat) == Matrix3x3(1.75f, -0.5f, -2.25f, -1, 0, 2, -0.25f, 0.5f, -0.25f));
 		}
 	};
 

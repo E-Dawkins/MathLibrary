@@ -240,3 +240,75 @@ float Matrix3x3::Determinant(Matrix3x3 _mat)
 
 	return (a * aMat.Determinant()) - (b * bMat.Determinant()) + (c * cMat.Determinant());
 }
+
+Matrix3x3 Matrix3x3::Inverse()
+{
+	Matrix3x3 cofacMat = Matrix3x3
+	(
+		FindCofactor(0, 0), FindCofactor(0, 1), FindCofactor(0, 2),
+		FindCofactor(1, 0), FindCofactor(1, 1), FindCofactor(1, 2),
+		FindCofactor(2, 0), FindCofactor(2, 1), FindCofactor(2, 2)
+	);
+
+	return (1.f / Determinant()) * cofacMat.Transpose();
+}
+
+Matrix3x3 Matrix3x3::Inverse(Matrix3x3 _mat)
+{
+	Matrix3x3 cofacMat = Matrix3x3
+	(
+		_mat.FindCofactor(0, 0), _mat.FindCofactor(0, 1), _mat.FindCofactor(0, 2),
+		_mat.FindCofactor(1, 0), _mat.FindCofactor(1, 1), _mat.FindCofactor(1, 2),
+		_mat.FindCofactor(2, 0), _mat.FindCofactor(2, 1), _mat.FindCofactor(2, 2)
+	);
+
+	return (1.f / Determinant(_mat)) * cofacMat.Transpose();
+}
+
+Matrix3x3 Matrix3x3::Transpose()
+{
+	return Matrix3x3
+	(
+		m_rows[0][0], m_rows[1][0], m_rows[2][0],
+		m_rows[0][1], m_rows[1][1], m_rows[2][1],
+		m_rows[0][2], m_rows[1][2], m_rows[2][2]
+	);
+}
+
+Matrix3x3 Matrix3x3::Transpose(Matrix3x3 _mat)
+{
+	return Matrix3x3
+	(
+		_mat[0][0], _mat[1][0], _mat[2][0],
+		_mat[0][1], _mat[1][1], _mat[2][1],
+		_mat[0][2], _mat[1][2], _mat[2][2]
+	);
+}
+
+float Matrix3x3::FindCofactor(int _row, int _col)
+{
+	Matrix2x2 remainsMat;
+
+	int curRow = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == _row)
+			continue;
+
+		int curCol = 0;
+
+		for (int j = 0; j < 3; j++)
+		{
+			if (j == _col)
+				continue;
+
+			remainsMat[curRow][curCol] = m_rows[i][j];
+			curCol++;
+		}
+
+		curRow++;
+	}
+
+	return powf(-1.f, (_row + _col + 2)) * remainsMat.Determinant();
+}
