@@ -1,8 +1,8 @@
 #pragma once
 #include "defs.h"
+#include "Vector2.h"
 #include <vector>
 #include <iostream>
-#include "Vector2.h"
 
 class MATHLIBRARY_API Matrix2x2
 {

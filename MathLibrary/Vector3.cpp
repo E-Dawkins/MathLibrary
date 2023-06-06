@@ -161,14 +161,14 @@ float Vector3::Angle(Vector3 _other)
 {
 	float totalMagnitude = Magnitude() * _other.Magnitude();
 	float cosResult = Cross(_other) / totalMagnitude;
-	return Rad2Deg(acosf(cosResult));
+	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
 float Vector3::Angle(Vector3 _to, Vector3 _from)
 {
 	float totalMagnitude = Magnitude(_to) * Magnitude(_from);
 	float cosResult = Cross(_to, _from) / totalMagnitude;
-	return Rad2Deg(acosf(cosResult));
+	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
 float Vector3::Cross(Vector3 _other)

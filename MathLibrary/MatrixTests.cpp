@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "Helpers.h"
 #include "Matrices.h"
 #include "Vectors.h"
-#include "defs.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace HELPERS;
 
 namespace MATRICES
 {
@@ -281,6 +282,156 @@ namespace MATRICES
 
 	TEST_CLASS(MATRIX4x4)
 	{
+		TEST_METHOD(CONSTRUCTION)
+		{
+			Matrix4x4 mat = Matrix4x4();
+			Assert::IsTrue(mat[0] == Vector4(0) && mat[1] == Vector4(0) && 
+							mat[2] == Vector4(0) && mat[3] == Vector4(0));
 
+			mat = Matrix4x4(42);
+			Assert::IsTrue(mat[0] == Vector4(42) && mat[1] == Vector4(42) &&
+				mat[2] == Vector4(42) && mat[3] == Vector4(42));
+
+			mat = Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+			Assert::IsTrue(mat[0] == Vector4(1, 2, 3, 4) && mat[1] == Vector4(5, 6, 7, 8) &&
+				mat[2] == Vector4(9, 10, 11, 12) && mat[3] == Vector4(13, 14, 15, 16));
+		}
+
+		TEST_METHOD(EQUALITY)
+		{
+			Matrix4x4 mat = Matrix4x4(1);
+			Assert::IsFalse(mat == Matrix4x4(2));
+			Assert::IsTrue(mat != Matrix4x4(2));
+
+			mat = Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+			Assert::IsTrue(mat.IsIdentity() && Matrix4x4::IsIdentity(mat));
+		}
+
+		TEST_METHOD(SUBSCRIPT)
+		{
+			Matrix4x4 mat = Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+			Assert::IsTrue(mat[1] == Vector4(5, 6, 7, 8));
+			Assert::IsTrue(mat(0, 1) == 2);
+			Assert::IsTrue(mat.GetRow(0) == Vector4(1, 2, 3, 4));
+			Assert::IsTrue(mat.GetCol(1) == Vector4(2, 6, 10, 14));
+		}
+
+		TEST_METHOD(GLOBALS)
+		{
+			Assert::IsTrue(Matrix4x4(0) == Matrix4x4::zero);
+			Assert::IsTrue(Matrix4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) == Matrix4x4::identity);
+		}
+
+		TEST_METHOD(OSTREAM)
+		{
+			std::ostringstream os;
+			Matrix4x4 mat = Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+			os << mat;
+			Assert::AreEqual("(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)", os.str().c_str());
+		}
+
+		TEST_METHOD(ADDITION)
+		{
+			Matrix4x4 mat = Matrix4x4(2);
+
+			mat = mat + Matrix4x4(1);
+			Assert::IsTrue(mat == Matrix4x4(3));
+
+			mat = mat + 1;
+			Assert::IsTrue(mat == Matrix4x4(4));
+
+			mat += Matrix4x4(0.5f);
+			Assert::IsTrue(mat == Matrix4x4(4.5f));
+
+			mat += 1.5f;
+			Assert::IsTrue(mat == Matrix4x4(6));
+		}
+
+		TEST_METHOD(SUBTRACTION)
+		{
+			Matrix4x4 mat = Matrix4x4(10);
+
+			mat = mat - Matrix4x4(2);
+			Assert::IsTrue(mat == Matrix4x4(8));
+
+			mat = mat - 1;
+			Assert::IsTrue(mat == Matrix4x4(7));
+
+			mat -= Matrix4x4(3);
+			Assert::IsTrue(mat == Matrix4x4(4));
+
+			mat -= 4;
+			Assert::IsTrue(mat == Matrix4x4(0));
+		}
+
+		TEST_METHOD(MULTIPLICATION)
+		{
+			Matrix4x4 mat = Matrix4x4(4);
+
+			mat = mat * 2.5f;
+			Assert::IsTrue(mat == Matrix4x4(10));
+
+			mat = mat * 3;
+			Assert::IsTrue(mat == Matrix4x4(30));
+
+			mat *= 4;
+			Assert::IsTrue(mat == Matrix4x4(120));
+
+			mat = Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) 
+				* Matrix4x4(16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+			Assert::IsTrue(mat == Matrix4x4(80, 70, 60, 50, 240, 214, 188, 162, 400, 358, 316, 274, 560, 502, 444, 386));
+
+			Vector4 vec = Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16) * Vector4(4, 3, 2, 1);
+			Assert::IsTrue(vec == Vector4(20, 60, 100, 140));
+
+			vec = Vector4(4, 3, 2, 1) * Matrix4x4(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+			Assert::IsTrue(vec == Vector4(50, 60, 70, 80));
+		}
+
+		TEST_METHOD(DIVISION)
+		{
+			Matrix4x4 mat = Matrix4x4(100);
+
+			mat = mat / 2;
+			Assert::IsTrue(mat == Matrix4x4(50));
+
+			mat /= 5;
+			Assert::IsTrue(mat == Matrix4x4(10));
+		}
+
+		TEST_METHOD(FUNCTIONS)
+		{
+			Matrix4x4 mat = Matrix4x4(
+				1, 1, 1, 0, 
+				0, 3, 1, 2, 
+				2, 3, 1, 0, 
+				1, 0, 2, 1);
+
+			Assert::AreEqual(-4.f, mat.Determinant());
+			Assert::AreEqual(-4.f, Matrix4x4::Determinant(mat));
+
+			Matrix4x4 transpose = Matrix4x4(
+				1, 0, 2, 1,
+				1, 3, 3, 0,
+				1, 1, 1, 2,
+				0, 2, 0, 1);
+
+			Assert::IsTrue(transpose == mat.Transpose());
+			Assert::IsTrue(transpose == Matrix4x4::Transpose(mat));
+
+			Matrix4x4 inverse = Matrix4x4(
+				-3, -0.5f, 1.5f, 1,
+				1, 0.25f, -0.25f, -0.5f,
+				3, 0.25f, -1.25f, -0.5f,
+				-3, 0, 1, 1);
+
+			Assert::IsTrue(mat.Inverse() == inverse);
+			Assert::IsTrue(Matrix4x4::Inverse(mat) == inverse);
+
+			Matrix3x3 aMat = Matrix3x3(mat[1][1], mat[1][2], mat[1][3], mat[2][1],
+				mat[2][2], mat[2][3], mat[3][1], mat[3][2], mat[3][3]);
+			Matrix3x3 bMat = FindSubMatrix4x4(mat, 0, 0);
+			Assert::IsTrue(aMat.Determinant() == bMat.Determinant());
+		}
 	};
 }

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Matrix2x2.h"
-#include "Vector2.h"
 
 Matrix2x2 Matrix2x2::zero = Matrix2x2(0);
 Matrix2x2 Matrix2x2::identity = Matrix2x2(1, 0, 0, 1);
@@ -168,26 +167,22 @@ bool Matrix2x2::IsIdentity(Matrix2x2 _mat)
 
 float Matrix2x2::Determinant()
 {
-	return (m_rows[0][0] * m_rows[1][1]) -
-			(m_rows[0][1] * m_rows[1][0]);
+	return (m_rows[0][0] * m_rows[1][1]) - (m_rows[0][1] * m_rows[1][0]);
 }
 
 float Matrix2x2::Determinant(Matrix2x2 _mat)
 {
-	return (_mat[0][0] * _mat[1][1]) -
-		(_mat[0][1] * _mat[1][0]);
+	return (_mat[0][0] * _mat[1][1]) - (_mat[0][1] * _mat[1][0]);
 }
 
 Matrix2x2 Matrix2x2::Inverse()
 {
-	Matrix2x2 flipped = Matrix2x2(m_rows[1][1], -m_rows[0][1], -m_rows[1][0], m_rows[0][0]);
-	return flipped / Determinant();
+	return Matrix2x2(m_rows[1][1], -m_rows[0][1], -m_rows[1][0], m_rows[0][0]) / Determinant();
 }
 
 Matrix2x2 Matrix2x2::Inverse(Matrix2x2 _mat)
 {
-	Matrix2x2 flipped = Matrix2x2(_mat[1][1], -_mat[0][1], -_mat[1][0], _mat[0][0]);
-	return flipped / Determinant(_mat);
+	return Matrix2x2(_mat[1][1], -_mat[0][1], -_mat[1][0], _mat[0][0]) / Determinant(_mat);
 }
 
 Matrix2x2 Matrix2x2::Transpose()

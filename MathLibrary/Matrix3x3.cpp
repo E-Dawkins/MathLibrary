@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Matrix3x3.h"
-#include "Vector3.h"
 #include "Matrix2x2.h"
+#include "Helpers.h"
+
+using namespace HELPERS;
 
 Matrix3x3 Matrix3x3::zero = Matrix3x3(0);
 Matrix3x3 Matrix3x3::identity = Matrix3x3(1, 0, 0, 0, 1, 0, 0, 0, 1);
@@ -217,52 +219,26 @@ bool Matrix3x3::IsIdentity(Matrix3x3 _mat)
 
 float Matrix3x3::Determinant()
 {
-	Matrix2x2 aMat = Matrix2x2(m_rows[1][1], m_rows[1][2], m_rows[2][1], m_rows[2][2]);
-	Matrix2x2 bMat = Matrix2x2(m_rows[1][0], m_rows[1][2], m_rows[2][0], m_rows[2][2]);
-	Matrix2x2 cMat = Matrix2x2(m_rows[1][0], m_rows[1][1], m_rows[2][0], m_rows[2][1]);
-
-	float a = m_rows[0][0];
-	float b = m_rows[0][1];
-	float c = m_rows[0][2];
-
-	return (a * aMat.Determinant()) - (b * bMat.Determinant()) + (c * cMat.Determinant());
+	return ((*this)[0][0] * FindSubMatrix3x3((*this), 0, 0).Determinant()) -
+		((*this)[1][0] * FindSubMatrix3x3((*this), 1, 0).Determinant()) +
+		((*this)[2][0] * FindSubMatrix3x3((*this), 2, 0).Determinant());
 }
 
 float Matrix3x3::Determinant(Matrix3x3 _mat)
 {
-	Matrix2x2 aMat = Matrix2x2(_mat[1][1], _mat[1][2], _mat[2][1], _mat[2][2]);
-	Matrix2x2 bMat = Matrix2x2(_mat[1][0], _mat[1][2], _mat[2][0], _mat[2][2]);
-	Matrix2x2 cMat = Matrix2x2(_mat[1][0], _mat[1][1], _mat[2][0], _mat[2][1]);
-
-	float a = _mat[0][0];
-	float b = _mat[0][1];
-	float c = _mat[0][2];
-
-	return (a * aMat.Determinant()) - (b * bMat.Determinant()) + (c * cMat.Determinant());
+	return (_mat[0][0] * FindSubMatrix3x3(_mat, 0, 0).Determinant()) - 
+		(_mat[1][0] * FindSubMatrix3x3(_mat, 1, 0).Determinant()) + 
+		(_mat[2][0] * FindSubMatrix3x3(_mat, 2, 0).Determinant());
 }
 
 Matrix3x3 Matrix3x3::Inverse()
 {
-	Matrix3x3 cofacMat = Matrix3x3
-	(
-		FindCofactor(0, 0), FindCofactor(0, 1), FindCofactor(0, 2),
-		FindCofactor(1, 0), FindCofactor(1, 1), FindCofactor(1, 2),
-		FindCofactor(2, 0), FindCofactor(2, 1), FindCofactor(2, 2)
-	);
-
-	return (1.f / Determinant()) * cofacMat.Transpose();
+	return (1.f / Determinant()) * FindCofactorMatrix3x3((*this)).Transpose();
 }
 
 Matrix3x3 Matrix3x3::Inverse(Matrix3x3 _mat)
 {
-	Matrix3x3 cofacMat = Matrix3x3
-	(
-		_mat.FindCofactor(0, 0), _mat.FindCofactor(0, 1), _mat.FindCofactor(0, 2),
-		_mat.FindCofactor(1, 0), _mat.FindCofactor(1, 1), _mat.FindCofactor(1, 2),
-		_mat.FindCofactor(2, 0), _mat.FindCofactor(2, 1), _mat.FindCofactor(2, 2)
-	);
-
-	return (1.f / Determinant(_mat)) * cofacMat.Transpose();
+	return (1.f / Determinant(_mat)) * FindCofactorMatrix3x3(_mat).Transpose();
 }
 
 Matrix3x3 Matrix3x3::Transpose()
@@ -283,32 +259,4 @@ Matrix3x3 Matrix3x3::Transpose(Matrix3x3 _mat)
 		_mat[0][1], _mat[1][1], _mat[2][1],
 		_mat[0][2], _mat[1][2], _mat[2][2]
 	);
-}
-
-float Matrix3x3::FindCofactor(int _row, int _col)
-{
-	Matrix2x2 remainsMat;
-
-	int curRow = 0;
-
-	for (int i = 0; i < 3; i++)
-	{
-		if (i == _row)
-			continue;
-
-		int curCol = 0;
-
-		for (int j = 0; j < 3; j++)
-		{
-			if (j == _col)
-				continue;
-
-			remainsMat[curRow][curCol] = m_rows[i][j];
-			curCol++;
-		}
-
-		curRow++;
-	}
-
-	return powf(-1.f, (_row + _col + 2)) * remainsMat.Determinant();
 }

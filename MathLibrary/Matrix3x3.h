@@ -1,8 +1,8 @@
 #pragma once
 #include "defs.h"
+#include "Vector3.h"
 #include <vector>
 #include <iostream>
-#include "Vector3.h"
 
 class MATHLIBRARY_API Matrix3x3
 {
@@ -60,6 +60,4 @@ public:
 
 protected:
 	std::vector<Vector3> m_rows;
-
-	float FindCofactor(int _row, int _col);
 };
