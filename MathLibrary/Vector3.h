@@ -50,8 +50,11 @@ public:
 	float Angle(Vector3 _other);
 	static float Angle(Vector3 _to, Vector3 _from);
 
-	float Cross(Vector3 _other);
-	static float Cross(Vector3 _a, Vector3 _b);
+	Vector3 Cross(Vector3 _other);
+	static Vector3 Cross(Vector3 _a, Vector3 _b);
+
+	float Dot(Vector3 _other);
+	static float Dot(Vector3 _a, Vector3 _b);
 
 	static Vector3 Lerp(Vector3 _from, Vector3 _to, float _t);
 	static float Distance(Vector3 _a, Vector3 _b);

@@ -140,8 +140,6 @@ float& Vector4::operator[](int _index)
 		case 2: return z;
 		case 3: return w;
 	}
-
-	return x;
 }
 
 float Vector4::Magnitude()
@@ -164,12 +162,12 @@ Vector4 Vector4::Normalized(Vector4 _vector)
 	return _vector / Magnitude(_vector);
 }
 
-float Vector4::Cross(Vector4 _other)
+float Vector4::Dot(Vector4 _other)
 {
 	return (x * _other.x) + (y * _other.y) + (z * _other.z) + (w * _other.w);
 }
 
-float Vector4::Cross(Vector4 _a, Vector4 _b)
+float Vector4::Dot(Vector4 _a, Vector4 _b)
 {
 	return (_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z) + (_a.w * _b.w);
 }

@@ -48,8 +48,8 @@ public:
 	Vector4 Normalized();
 	static Vector4 Normalized(Vector4 _vector);
 
-	float Cross(Vector4 _other);
-	static float Cross(Vector4 _a, Vector4 _b);
+	float Dot(Vector4 _other);
+	static float Dot(Vector4 _a, Vector4 _b);
 
 	static Vector4 Lerp(Vector4 _from, Vector4 _to, float _t);
 	static float Distance(Vector4 _a, Vector4 _b);

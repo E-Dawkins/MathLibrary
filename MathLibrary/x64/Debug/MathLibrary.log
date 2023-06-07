@@ -1,14 +1,1 @@
-﻿  MathLibrary.vcxproj -> C:\Users\s213634\Desktop\GitHub\MathLibrary\temp\MathLibrary\x64\Debug\MathLibrary_d.dll
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\defs.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\framework.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Helpers.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Matrices.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Matrix2x2.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Matrix3x3.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Matrix4x4.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\pch.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Vector2.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Vector3.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Vector4.h
-  C:\Users\s213634\Desktop\GitHub\MathLibrary\MathLibrary\Vectors.h
-  12 File(s) copied
+﻿D:\Github\MathLibrary\MathLibrary\Matrix4x4.h(62,23): warning C4251: 'Matrix4x4::m_rows': class 'std::vector<Vector4,std::allocator<Vector4>>' needs to have dll-interface to be used by clients of class 'Matrix4x4'

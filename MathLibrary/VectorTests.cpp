@@ -128,7 +128,7 @@ namespace VECTORS
             Assert::AreEqual(45.f, temp.Angle(Vector2(0, 1)), 0.0001f);
 
             temp = Vector2(2, 4);
-            Assert::AreEqual(temp.Cross(Vector2(3, 5)), 26.f);
+            Assert::AreEqual(temp.Dot(Vector2(3, 5)), 26.f);
 
             Vector2 lerp = Vector2::Lerp(temp, Vector2(4, 8), 0.25f);
             Assert::IsTrue(lerp.x == 2.5f && lerp.y == 5);
@@ -264,7 +264,9 @@ namespace VECTORS
             Assert::AreEqual(54.74f, temp.Angle(Vector3(0, 1, 0)), 0.01f);
 
             temp = Vector3(2, 4, 3);
-            Assert::AreEqual(temp.Cross(Vector3(3, 5, 0)), 26.f);
+            Assert::AreEqual(temp.Dot(Vector3(3, 5, 0)), 26.f);
+
+            Assert::IsTrue(Vector3::Cross(Vector3(3, 0, 2), Vector3(-1, 4, 2)) == Vector3(-8, -8, 12));
 
             Vector3 lerp = Vector3::Lerp(temp, Vector3(4, 8, 6), 0.25f);
             Assert::IsTrue(lerp.x == 2.5f && lerp.y == 5 && lerp.z == 3.75f);
@@ -399,7 +401,7 @@ namespace VECTORS
             Assert::IsTrue(temp.Normalized() == Vector4(1, 0, 0, 0));
 
             temp = Vector4(2, 4, 3, 2);
-            Assert::AreEqual(temp.Cross(Vector4(3, 5, 0, 1)), 28.f);
+            Assert::AreEqual(temp.Dot(Vector4(3, 5, 0, 1)), 28.f);
 
             Vector4 lerp = Vector4::Lerp(temp, Vector4(4, 8, 6, 4), 0.25f);
             Assert::IsTrue(lerp.x == 2.5f && lerp.y == 5 && lerp.z == 3.75f && lerp.w == 2.5f);

@@ -49,8 +49,8 @@ public:
 	float Angle(Vector2 _other);
 	static float Angle(Vector2 _to, Vector2 _from);
 
-	float Cross(Vector2 _other);
-	static float Cross(Vector2 _a, Vector2 _b);
+	float Dot(Vector2 _other);
+	static float Dot(Vector2 _a, Vector2 _b);
 
 	static Vector2 Lerp(Vector2 _from, Vector2 _to, float _t);
 	static float Distance(Vector2 _a, Vector2 _b);

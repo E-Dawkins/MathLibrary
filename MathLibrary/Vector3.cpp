@@ -160,23 +160,43 @@ Vector3 Vector3::Normalized(Vector3 _vector)
 float Vector3::Angle(Vector3 _other)
 {
 	float totalMagnitude = Magnitude() * _other.Magnitude();
-	float cosResult = Cross(_other) / totalMagnitude;
+	float cosResult = Dot(_other) / totalMagnitude;
 	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
 float Vector3::Angle(Vector3 _to, Vector3 _from)
 {
 	float totalMagnitude = Magnitude(_to) * Magnitude(_from);
-	float cosResult = Cross(_to, _from) / totalMagnitude;
+	float cosResult = Dot(_to, _from) / totalMagnitude;
 	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
-float Vector3::Cross(Vector3 _other)
+Vector3 Vector3::Cross(Vector3 _other)
+{
+	return Vector3
+	(
+		(y * _other.z) - (z * _other.y),
+		(z * _other.x) - (x * _other.z),
+		(x * _other.y) - (y * _other.x)
+	);
+}
+
+Vector3 Vector3::Cross(Vector3 _a, Vector3 _b)
+{
+	return Vector3
+	(
+		(_a.y * _b.z) - (_a.z * _b.y),
+		(_a.z * _b.x) - (_a.x * _b.z),
+		(_a.x * _b.y) - (_a.y * _b.x)
+	);
+}
+
+float Vector3::Dot(Vector3 _other)
 {
 	return (x * _other.x) + (y * _other.y) + (z * _other.z);
 }
 
-float Vector3::Cross(Vector3 _a, Vector3 _b)
+float Vector3::Dot(Vector3 _a, Vector3 _b)
 {
 	return (_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z);
 }
@@ -194,5 +214,5 @@ float Vector3::Distance(Vector3 _a, Vector3 _b)
 
 Vector3 Vector3::Reflect(Vector3 _inDirection, Vector3 _normal)
 {
-	return _inDirection - 2.f * Cross(_inDirection, _normal) * _normal;
+	return _inDirection - 2.f * Dot(_inDirection, _normal) * _normal;
 }

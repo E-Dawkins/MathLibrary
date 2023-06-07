@@ -147,23 +147,23 @@ Vector2 Vector2::Normalized(Vector2 _vector)
 float Vector2::Angle(Vector2 _other)
 {
 	float totalMagnitude = Magnitude() * _other.Magnitude();
-	float cosResult = Cross(_other) / (totalMagnitude);
+	float cosResult = Dot(_other) / (totalMagnitude);
 	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
 float Vector2::Angle(Vector2 _to, Vector2 _from)
 {
 	float totalMagnitude = Magnitude(_to) * Magnitude(_from);
-	float cosResult = Cross(_to, _from) / (totalMagnitude);
+	float cosResult = Dot(_to, _from) / (totalMagnitude);
 	return HELPERS::Rad2Deg(acosf(cosResult));
 }
 
-float Vector2::Cross(Vector2 _other)
+float Vector2::Dot(Vector2 _other)
 {
 	return (x * _other.x) + (y * _other.y);
 }
 
-float Vector2::Cross(Vector2 _a, Vector2 _b)
+float Vector2::Dot(Vector2 _a, Vector2 _b)
 {
 	return (_a.x * _b.x) + (_a.y * _b.y);
 }
@@ -181,5 +181,5 @@ float Vector2::Distance(Vector2 _a, Vector2 _b)
 
 Vector2 Vector2::Reflect(Vector2 _inDirection, Vector2 _normal)
 {
-	return _inDirection - 2.f * Cross(_inDirection, _normal) * _normal;
+	return _inDirection - 2.f * Dot(_inDirection, _normal) * _normal;
 }
