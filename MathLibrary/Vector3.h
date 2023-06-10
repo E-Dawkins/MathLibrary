@@ -46,6 +46,7 @@ public:
 
 	Vector3 Normalized() const;
 	static Vector3 Normalized(const Vector3& _vector);
+	void Normalize();
 
 	float Angle(const Vector3& _other) const;
 	static float Angle(const Vector3& _to, const Vector3& _from);

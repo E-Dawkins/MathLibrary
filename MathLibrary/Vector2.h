@@ -45,6 +45,7 @@ public:
 
 	Vector2 Normalized() const;
 	static Vector2 Normalized(const Vector2& _vector);
+	void Normalize();
 
 	float Angle(const Vector2& _other) const;
 	static float Angle(const Vector2& _to, const Vector2& _from);

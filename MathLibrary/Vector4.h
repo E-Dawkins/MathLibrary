@@ -47,6 +47,7 @@ public:
 
 	Vector4 Normalized() const;
 	static Vector4 Normalized(const Vector4& _vector);
+	void Normalize();
 
 	float Dot(const Vector4& _other) const;
 	static float Dot(const Vector4& _a, const Vector4& _b);
