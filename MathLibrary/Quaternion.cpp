@@ -1,179 +1,202 @@
+#pragma once
 #include "pch.h"
 #include "Quaternion.h"
-#include "Vector3.h"
-#include "Matrix4x4.h"
+#include "Helpers.h"
 
-Quaternion Quaternion::identity = Quaternion(0, 0, 0, 1);
+using namespace HELPERS;
 
-Quaternion::Quaternion()
+Quaternion::Quaternion(float _scalar, Vector3 _vector)
 {
-	x = 0;
-	y = 0;
-	z = 0;
-	w = 1;
+	s = _scalar;
+	v = _vector;
 }
 
-Quaternion::Quaternion(float _x, float _y, float _z, float _w)
+Quaternion::Quaternion(const Quaternion& _value)
 {
-	x = _x;
-	y = _y;
-	z = _z;
-	w = _w;
+	s = _value.s;
+	v = _value.v;
 }
 
-Quaternion::Quaternion(Vector3 _vector, float _scalar)
+Quaternion::Quaternion(Vector3 _euler)
 {
-	x = _vector.x;
-	y = _vector.y;
-	z = _vector.z;
-	w = _scalar;
+	double yaw = _euler[0];
+	double pitch = _euler[1];
+	double roll = _euler[2];
+
+	v[0] = sin(roll / 2.0) * cos(pitch / 2.0) * cos(yaw / 2.0) - cos(roll / 2.0) * sin(pitch / 2.0) * sin(yaw / 2.0);
+	v[1] = cos(roll / 2.0) * sin(pitch / 2.0) * cos(yaw / 2.0) + sin(roll / 2.0) * cos(pitch / 2.0) * sin(yaw / 2.0);
+	v[2] = cos(roll / 2.0) * cos(pitch / 2.0) * sin(yaw / 2.0) - sin(roll / 2.0) * sin(pitch / 2.0) * cos(yaw / 2.0);
+	s = cos(roll / 2.0) * cos(pitch / 2.0) * cos(yaw / 2.0) + sin(roll / 2.0) * sin(pitch / 2.0) * sin(yaw / 2.0);
 }
 
-Vector3 Quaternion::Vector()
+bool Quaternion::operator==(const Quaternion _q)
 {
-	return Vector3(x, y, z);
+	return s == _q.s && v == _q.v;
 }
 
-float& Quaternion::operator[](int _index)
+bool Quaternion::operator!=(const Quaternion _q)
 {
-	if (_index < 0 || _index > 3)
-		throw std::out_of_range("Subscript index was out of range!");
-
-	switch (_index)
-	{
-		case 0: return x;
-		case 1: return y;
-		case 2: return z;
-		case 3: return w;
-	}
+	return s != _q.s || v != _q.v;
 }
 
-bool Quaternion::operator==(Quaternion _other)
+Quaternion& Quaternion::operator=(const Quaternion& _value)
 {
-	return x == _other.x && y == _other.y && z == _other.z && w == _other.w;
+	s = _value.s;
+	v = _value.v;
+
+	return *this;
 }
 
-bool Quaternion::operator!=(Quaternion _other)
+void Quaternion::operator+=(const Quaternion& _q)
 {
-	return x != _other.x || y != _other.y || z != _other.z || w != _other.w;
+	s += _q.s;
+	v += _q.v;
 }
 
-Quaternion operator*(Quaternion _lhs, Quaternion _rhs)
+Quaternion Quaternion::operator+(const Quaternion& _q) const
 {
-	float scalar = (_lhs.w * _rhs.w) - (Vector3::Dot(_lhs.Vector(), _rhs.Vector()));
-	Vector3 vector = (_lhs.w * _rhs.Vector()) + (_rhs.w * _lhs.Vector()) + Vector3::Cross(_lhs.Vector(), _rhs.Vector());
-	return Quaternion(vector, scalar);
+	float scalar = s + _q.s;
+	Vector3 imaginary = v + _q.v;
+
+	return Quaternion(scalar, imaginary);
 }
 
-Quaternion operator*(float _lhs, Quaternion _rhs)
+void Quaternion::operator-=(const Quaternion& _q)
 {
-	return Quaternion(_rhs.x * _lhs, _rhs.y * _lhs, _rhs.z * _lhs, _rhs.w * _lhs);
+	s -= _q.s;
+	v -= _q.v;
 }
 
-Quaternion operator*(Quaternion _lhs, float _rhs)
+Quaternion Quaternion::operator-(const Quaternion _q) const
 {
-	return Quaternion(_lhs.x * _rhs, _lhs.y * _rhs, _lhs.z * _rhs, _lhs.w * _rhs);
+	float scalar = s - _q.s;
+	Vector3 imaginary = v - _q.v;
+
+	return Quaternion(scalar, imaginary);
 }
 
-Quaternion operator+(Quaternion _lhs, Quaternion _rhs)
+void Quaternion::operator*=(const Quaternion& _q)
 {
-	return Quaternion(_lhs.x + _rhs.x, _lhs.y + _rhs.y, _lhs.z + _rhs.z, _lhs.w + _rhs.w);
+	float scalar = s * _q.s - v.Dot(_q.v);
+	Vector3 imaginary = s * _q.v + _q.s * v + v.Cross(_q.v);
+
+	s = scalar;
+	v = imaginary;
 }
 
-Quaternion operator-(Quaternion _lhs, Quaternion _rhs)
+Quaternion Quaternion::operator*(const Quaternion& _q) const
 {
-	return Quaternion(_lhs.x - _rhs.x, _lhs.y - _rhs.y, _lhs.z - _rhs.z, _lhs.w - _rhs.w);
+	float scalar = s * _q.s - v.Dot(_q.v);
+	Vector3 imaginary = s * _q.v + _q.s * v + v.Cross(_q.v);
+
+	return Quaternion(scalar, imaginary);
 }
 
-float Quaternion::Dot(Quaternion _other)
+void Quaternion::operator*=(const float _value)
 {
-	return (w * _other.w) + (x * _other.x) + (y * _other.y) + (z * _other.z);
+	s *= _value;
+	v *= _value;
 }
 
-float Quaternion::Dot(Quaternion _a, Quaternion _b)
+Quaternion Quaternion::operator*(const float _value) const
 {
-	return (_a.w * _b.w) + (_a.x * _b.x) + (_a.y * _b.y) + (_a.z * _b.z);
-}
-
-bool Quaternion::IsIdentity()
-{
-	return x == 0 && y == 0 && z == 0 && w == 1;
-}
-
-bool Quaternion::IsIdentity(Quaternion _quat)
-{
-	return _quat == Quaternion(0, 0, 0, 1);
+	return Quaternion(s * _value, v * _value);
 }
 
 float Quaternion::Magnitude()
 {
-	return sqrtf((x * x) + (y * y) + (z * z) + (w * w));
+	float s2 = s * s;
+	float v2 = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+
+	return sqrt(s2 + v2);
 }
 
-float Quaternion::Magnitude(Quaternion _quat)
+void Quaternion::Normalize()
 {
-	return sqrtf((_quat.x * _quat.x) + (_quat.y * _quat.y)
-		+ (_quat.z * _quat.z) + (_quat.w * _quat.w));
+	float magnitude = Magnitude();
+
+	if (magnitude != 0)
+	{
+		s /= magnitude;
+		v /= magnitude;
+	}
+}
+
+Quaternion Quaternion::Normalized()
+{
+	float magnitude = Magnitude();
+	return Quaternion(s / magnitude, v / magnitude);
+}
+
+void Quaternion::RNormalize()
+{
+	float angle = Deg2Rad(s);
+	
+	s = cosf(angle * 0.5);
+	v = v.Normalized() * sinf(angle * 0.5);
 }
 
 Quaternion Quaternion::Conjugate()
 {
-	return Quaternion(-x, -y, -z, w);
+	return Quaternion(s, v * -1.f);
 }
 
-Quaternion Quaternion::Conjugate(Quaternion _quat)
+Quaternion Quaternion::Inverse()
 {
-	return Quaternion(-_quat.x, -_quat.y, -_quat.z, _quat.w);
+	float magnitude = Magnitude();
+	magnitude = 1.f / (magnitude * magnitude);
+
+	Quaternion conjugate = Conjugate();
+
+	float scalar = conjugate.s * magnitude;
+	Vector3 imaginary = conjugate.v * magnitude;
+
+	return Quaternion(scalar, imaginary);
 }
 
-Quaternion Quaternion::Lerp(Quaternion _from, Quaternion _to, float _t)
+Vector3 Quaternion::RotateVector(Vector3 _vector, float _angle, Vector3 _axis)
 {
-	float t = (_t < 0 ? 0 : (_t > 1 ? 1 : _t));
+	// Vector -> Pure Quaternion
+	Quaternion p(0, _vector);
 
-	float x = _from.x + t * (_to.x - _from.x);
-	float y = _from.y + t * (_to.y - _from.y);
-	float z = _from.z + t * (_to.z - _from.z);
-	float w = _from.w + t * (_to.w - _from.w);
+	// Normalize axis-vector
+	_axis = _axis.Normalized();
 
-	return Quaternion(x, y, z, w);
+	// Create real quaternion
+	Quaternion q(_angle, _axis);
+
+	// Quaternion -> Rotation Normalized Quaternion
+	q.RNormalize();
+
+	// Get inverse of the quaternion
+	Quaternion qInverse = q.Inverse();
+
+	// Rotate the quaternion
+	Quaternion rotatedVector = q * p * qInverse;
+
+	// Return the vector part of the quaternion
+	return rotatedVector.v;
 }
 
-Quaternion Quaternion::Slerp(Quaternion _from, Quaternion _to, float _t)
+Vector3 Quaternion::ToEuler()
 {
-	float t = (_t < 0 ? 0 : (_t > 1 ? 1 : _t));
+	float x = v[0];
+	float y = v[1];
+	float z = v[2];
+	float w = s;
 
-	float dot = Dot(_from, _to);
+	double t0 = 2.0 * (w * x + y * z);
+	double t1 = 1.0 - 2.0 * (x * x + y * y);
+	double roll = atan2(t0, t1);
 
-	if (abs(dot) >= 1.f)
-		return _from;
+	double t2 = 2.0 * (w * y - z * x);
+	t2 = t2 > 1.0 ? 1.0 : t2;
+	t2 = t2 < -1.0 ? -1.0 : t2;
+	double pitch = asin(t2);
 
-	float angle = acosf(dot);
-	float sinAngle = sqrtf(1.f - (dot * dot));
+	double t3 = 2.0 * (w * z + x * y);
+	double t4 = 1.0 - 2.0 * (y * y + z * z);
+	double yaw = atan2(t3, t4);
 
-	if (fabsf(sinAngle) < 0.001f)
-	{
-		return Quaternion
-		(
-			_from.x * 0.5f + _to.x * 0.5f,
-			_from.y * 0.5f + _to.y * 0.5f,
-			_from.z * 0.5f + _to.z * 0.5f,
-			_from.w * 0.5f + _to.w * 0.5f
-		);
-	}
-
-	float ratioA = sinf((1.f - t) * angle) / sinAngle;
-	float ratioB = sinf(t * angle) / sinAngle;
-
-	return Quaternion
-	(
-		_from.x * ratioA + _to.x * ratioB,
-		_from.y * ratioA + _to.y * ratioB,
-		_from.z * ratioA + _to.z * ratioB,
-		_from.w * ratioA + _to.w * ratioB
-	);
-}
-
-void operator<<(std::ostream& _os, Quaternion& _quat)
-{
-	_os << "(" << _quat.x << ", " << _quat.y << ", " << _quat.z << ", " << _quat.w << ")";
+	return Vector3(yaw, pitch, roll);
 }

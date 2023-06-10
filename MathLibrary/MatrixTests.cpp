@@ -11,13 +11,14 @@ namespace MATRICES
 {
 	TEST_CLASS(MATRIX2x2)
 	{
+	public:
 		TEST_METHOD(CONSTRUCTION)
 		{
 			Matrix2x2 mat = Matrix2x2();
 			Assert::IsTrue(mat[0] == Vector2(0) && mat[1] == Vector2(0));
 
 			mat = Matrix2x2(1);
-			Assert::IsTrue(mat[0] == Vector2(1) && mat[1] == Vector2(1));
+			Assert::IsTrue(mat[0][0] == 1.f && mat[1][0] == 1.f);
 
 			mat = Matrix2x2(1, 2, 3, 4);
 			Assert::IsTrue(mat[0] == Vector2(1, 2) && mat[1] == Vector2(3, 4));

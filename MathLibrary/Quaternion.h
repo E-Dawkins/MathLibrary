@@ -1,52 +1,50 @@
 #pragma once
 #include "defs.h"
-#include <iostream>
 
-class Vector3;
-class Matrix4x4;
+#include "Vector3.h"
 
 class MATHLIBRARY_API Quaternion
 {
 public:
-	Quaternion();
-	Quaternion(float _x, float _y, float _z, float _w = 0);
-	Quaternion(Vector3 _vector, float _scalar);
+	Quaternion() {};
+	Quaternion(float _scalar, Vector3 _vector);
+	Quaternion(const Quaternion& _value);
+	Quaternion(Vector3 _euler);
+	~Quaternion() {};
 
-	float x;
-	float y;
-	float z;
-	float w;
+	float s = 0;
+	Vector3 v = Vector3(0);
 
-	Vector3 Vector();
+	bool operator == (const Quaternion _q);
+	bool operator != (const Quaternion _q);
 
-	static Quaternion identity;
+	Quaternion& operator = (const Quaternion& _value);
 
-	float& operator [] (int _index);
+	void operator += (const Quaternion& _q);
+	Quaternion operator + (const Quaternion& _q) const;
+	
+	void operator -= (const Quaternion& _q);
+	Quaternion operator - (const Quaternion _q) const;
 
-	friend Quaternion operator * (Quaternion _lhs, Quaternion _rhs);
-	friend Quaternion operator * (float _lhs, Quaternion _rhs);
-	friend Quaternion operator * (Quaternion _lhs, float _rhs);
+	void operator *= (const Quaternion& _q);
+	Quaternion operator * (const Quaternion& _q) const;
 
-	friend Quaternion operator + (Quaternion _lhs, Quaternion _rhs);
-	friend Quaternion operator - (Quaternion _lhs, Quaternion _rhs);
-
-	bool operator == (Quaternion _other);
-	bool operator != (Quaternion _other);
-
-	friend void operator << (std::ostream& _os, Quaternion& _quat);
-
-	float Dot(Quaternion _other);
-	static float Dot(Quaternion _a, Quaternion _b);
-
-	bool IsIdentity();
-	static bool IsIdentity(Quaternion _quat);
+	void operator *= (const float _value);
+	Quaternion operator * (const float _value) const;
 
 	float Magnitude();
-	static float Magnitude(Quaternion _quat);
+
+	void Normalize();
+	Quaternion Normalized();
+
+	void RNormalize();
 
 	Quaternion Conjugate();
-	static Quaternion Conjugate(Quaternion _quat);
 
-	static Quaternion Lerp(Quaternion _from, Quaternion _to, float _t);
-	static Quaternion Slerp(Quaternion _from, Quaternion _to, float _t);
+	Quaternion Inverse();
+
+	static Vector3 RotateVector(Vector3 _vector, float _angle, Vector3 _axis);
+
+	Vector3 ToEuler();
+
 };

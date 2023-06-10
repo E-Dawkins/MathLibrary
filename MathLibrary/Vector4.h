@@ -18,39 +18,39 @@ public:
 	static Vector4 one;
 	static Vector4 half;
 
-	Vector4 operator + (Vector4 _other);
-	Vector4 operator + (float _value);
-	void operator += (Vector4 _other);
+	Vector4 operator + (const Vector4& _other) const;
+	Vector4 operator + (float _value) const;
+	void operator += (const Vector4& _other);
 	void operator += (float _value);
 
-	Vector4 operator - (Vector4 _other);
-	Vector4 operator - (float _value);
-	void operator -= (Vector4 _other);
+	Vector4 operator - (const Vector4& _other) const;
+	Vector4 operator - (float _value) const;
+	void operator -= (const Vector4& _other);
 	void operator -= (float _value);
 
-	friend Vector4 operator * (float _multi, Vector4 _vec);
-	friend Vector4 operator * (Vector4 _vec, float _multi);
+	friend Vector4 operator * (float _multi, const Vector4& _vec);
+	friend Vector4 operator * (const Vector4& _vec, float _multi);
 	void operator *= (float _multiplier);
 
-	Vector4 operator / (float _divisor);
+	Vector4 operator / (float _divisor) const;
 	void operator /= (float _divisor);
 
 	friend void operator << (std::ostream& _os, const Vector4& _vector);
 
-	bool operator == (Vector4 _other);
-	bool operator != (Vector4 _other);
+	bool operator == (const Vector4& _other);
+	bool operator != (const Vector4& _other);
 
 	float& operator [] (int _index);
 
-	float Magnitude();
-	static float Magnitude(Vector4 _vector);
+	float Magnitude() const;
+	static float Magnitude(const Vector4& _vector);
 
-	Vector4 Normalized();
-	static Vector4 Normalized(Vector4 _vector);
+	Vector4 Normalized() const;
+	static Vector4 Normalized(const Vector4& _vector);
 
-	float Dot(Vector4 _other);
-	static float Dot(Vector4 _a, Vector4 _b);
+	float Dot(const Vector4& _other) const;
+	static float Dot(const Vector4& _a, const Vector4& _b);
 
-	static Vector4 Lerp(Vector4 _from, Vector4 _to, float _t);
-	static float Distance(Vector4 _a, Vector4 _b);
+	static Vector4 Lerp(const Vector4& _from, const Vector4& _to, float _t);
+	static float Distance(const Vector4& _a, const Vector4& _b);
 };

@@ -192,5 +192,5 @@ Matrix2x2 Matrix2x2::Transpose()
 
 Matrix2x2 Matrix2x2::Transpose(Matrix2x2 _mat)
 {
-	return Matrix2x2(_mat.m_rows[0][0], _mat.m_rows[1][0], _mat.m_rows[0][1], _mat.m_rows[1][1]);
+	return Matrix2x2(_mat[0][0], _mat[1][0], _mat[0][1], _mat[1][1]);
 }

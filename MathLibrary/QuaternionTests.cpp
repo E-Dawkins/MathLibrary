@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "Quaternion.h"
-#include "Vector3.h"
-#include "Matrix4x4.h"
+#include "Helpers.h"
+
+using namespace HELPERS;
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,98 +13,109 @@ namespace QUATERNIONS
 	{
 		TEST_METHOD(CONSTRUCTION)
 		{
-			Quaternion quat = Quaternion();
-			Assert::IsTrue(quat.x == 0 && quat.y == 0 && quat.z == 0 && quat.w == 1);
+			Quaternion q = Quaternion();
+			Assert::IsTrue(q.s == 0 && q.v == Vector3());
 
-			quat = Quaternion(1, 2, 3, 4);
-			Assert::IsTrue(quat.x == 1 && quat.y == 2 && quat.z == 3 && quat.w == 4);
+			q = Quaternion(1, Vector3(2, 3, 4));
+			Assert::IsTrue(q.s == 1 && q.v == Vector3(2, 3, 4));
+
+			q = Quaternion(Quaternion(1, Vector3(2, 3, 4)));
+			Assert::IsTrue(q.s == 1 && q.v == Vector3(2, 3, 4));
 		}
 
 		TEST_METHOD(EQUALITY)
 		{
-			Quaternion quat = Quaternion(1, 2, 3, 4);
-			Assert::IsFalse(quat == Quaternion(4, 3, 2, 1));
-			Assert::IsTrue(quat != Quaternion(4, 3, 2, 1));
-
-			quat = Quaternion(0, 0, 0, 1);
-			Assert::IsTrue(quat.IsIdentity());
-			Assert::IsTrue(Quaternion::IsIdentity(quat));
+			Assert::IsFalse(Quaternion(1, Vector3(2, 3, 4)) == Quaternion(4, Vector3(3, 2, 1)));
+			Assert::IsTrue(Quaternion(1, Vector3(2, 3, 4)) != Quaternion(4, Vector3(3, 2, 1)));
 		}
 
-		TEST_METHOD(SUBSCRIPT)
+		TEST_METHOD(ADD_SUB)
 		{
-			Quaternion quat = Quaternion(1, 2, 3, 4);
-			Assert::AreEqual(2.f, quat[1]);
+			Quaternion a(0.5, Vector3(2, 3, -4));
+			Quaternion b(0.1, Vector3(4, 5, 6));
+			Quaternion add = a + b;
+			Quaternion sub = a - b;
+
+			Assert::IsTrue(add.s = 0.6f && add.v == Vector3(6, 8, 2));
+			Assert::IsTrue(sub.s = 0.4f && sub.v == Vector3(-2, -2, -10));
+
+			a += b;
+			b -= a;
+			
+			Assert::IsTrue(a.s == 0.6f && a.v == Vector3(6, 8, 2));
+			Assert::IsTrue(b.s = -0.5f && b.v == Vector3(-2, -3, 4));
 		}
 
-		TEST_METHOD(OSTREAM)
+		TEST_METHOD(MULTIPLY)
 		{
-			Quaternion quat = Quaternion(1, 2, 3, 4);
-			std::ostringstream os;
-			os << quat;
-			Assert::AreEqual("(1, 2, 3, 4)", os.str().c_str());
-		}
+			Quaternion a = Quaternion(3, Vector3(2, 4, 1));
+			Quaternion b = Quaternion(1, Vector3(3, 5, 2));
+			Quaternion result = Quaternion(-25, Vector3(14, 18, 5));
 
-		TEST_METHOD(GLOBALS)
-		{
-			Quaternion quat = Quaternion::identity;
-			Assert::IsTrue(quat == Quaternion(0, 0, 0, 1));
+			Assert::IsTrue((a * b) == result);
 
-			quat = Quaternion(1, 2, 3);
-			Assert::IsTrue(quat.Vector() == Vector3(1, 2, 3));
-		}
+			a *= b;
+			Assert::IsTrue(a == result);
 
-		TEST_METHOD(MULTIPLICATION)
-		{
-			Quaternion quatA = Quaternion(1, 2, 3, 10);
-			Quaternion quatB = Quaternion(3, 2, 1, 5);
-			Assert::IsTrue((quatA * quatB) == Quaternion(31, 38, 21, 40));
-			Assert::IsTrue((quatA * -1.f) == Quaternion(-1, -2, -3, -10));
-			Assert::IsTrue((-1.f * quatA) == Quaternion(-1, -2, -3, -10));
-		}
-
-		TEST_METHOD(ADDITION)
-		{
-			Quaternion quatA = Quaternion(1, 2, 3, 10);
-			Quaternion quatB = Quaternion(3, 2, 1, 5);
-			Assert::IsTrue((quatA + quatB) == Quaternion(4, 4, 4, 15));
-		}
-
-		TEST_METHOD(SUBTRACTION)
-		{
-			Quaternion quatA = Quaternion(1, 2, 3, 10);
-			Quaternion quatB = Quaternion(3, 2, 1, 5);
-			Assert::IsTrue((quatA - quatB) == Quaternion(-2, 0, 2, 5));
+			Assert::IsTrue(a * 2 == Quaternion(-50, Vector3(28, 36, 10)));
+			
+			b *= 2;
+			Assert::IsTrue(b == Quaternion(2, Vector3(6, 10, 4)));
 		}
 
 		TEST_METHOD(MAGNITUDE)
 		{
-			Quaternion quat = Quaternion(3, 2, 1, 10);
-			Assert::AreEqual(sqrtf(114), quat.Magnitude());
-			Assert::AreEqual(sqrtf(114), Quaternion::Magnitude(quat));
+			Quaternion q = Quaternion(1, Vector3(2, 3, 4));
+			Assert::AreEqual(q.Magnitude(), sqrtf(30));
+		}
+
+		TEST_METHOD(NORMALIZE)
+		{
+			Quaternion q = Quaternion(0, Vector3(20, 10, 5));
+
+			Assert::IsTrue(q.Normalized() == Quaternion(0, Vector3(0.8728716, 0.4364358, 0.2182179)));
+
+			q.Normalize();
+			Assert::IsTrue(q == Quaternion(0, Vector3(0.8728716, 0.4364358, 0.2182179)));
 		}
 
 		TEST_METHOD(CONJUGATE)
 		{
-			Quaternion quat = Quaternion(-1, 1, 3, 2);
-			Assert::IsTrue(quat.Conjugate() == Quaternion(1, -1, -3, 2));
-			Assert::IsTrue(Quaternion::Conjugate(quat) == Quaternion(1, -1, -3, 2));
+			Quaternion q(1, Vector3(2, 3, 4));
+			Assert::IsTrue(q.Conjugate() == Quaternion(1, Vector3(-2, -3, -4)));
 		}
 
-		TEST_METHOD(DOT)
+		TEST_METHOD(INVERSE)
 		{
-			Quaternion quat = Quaternion(0, 1, 0);
-			Assert::AreEqual(0.f, quat.Dot(Quaternion(1, 0, 0)));
-			Assert::AreEqual(0.f, Quaternion::Dot(quat, Quaternion(1, 0, 0)));
+			Quaternion q(0, Vector3(20, 30, 25));
+			Quaternion inv = q.Inverse();
+
+			Assert::AreEqual(inv.s, 0.f);
+			Assert::AreEqual(inv.v.x, -0.01038961f, (float)EPS);
+			Assert::AreEqual(inv.v.y, -0.01558441f, (float)EPS);
+			Assert::AreEqual(inv.v.z, -0.01298701f, (float)EPS);
 		}
 
-		TEST_METHOD(INTERPOLATION)
+		TEST_METHOD(ROTATE_VECTOR)
 		{
-			Quaternion lerped = Quaternion::Lerp(Quaternion(0, 1, 0), Quaternion(0, -1, 0), 0.5f);
-			Quaternion slerped = Quaternion::Slerp(Quaternion(0, 1, 0), Quaternion(-1, 0, 0), 0.5f);
+			Vector3 vec = Vector3(0, 1, 0);
+			Vector3 axis = Vector3(1, 0, 0);
 
-			Assert::IsTrue(lerped == Quaternion(0, 0, 0));
-			Assert::IsTrue(slerped == Quaternion(-0.7071067811865475f, 0.7071067811865475f, 0));
+			Vector3 expected(0, 0, 1);
+			Vector3 actual = Quaternion::RotateVector(vec, 90, axis);
+
+			Assert::IsTrue(actual == expected);
+		}
+
+		TEST_METHOD(EULERS)
+		{
+			Vector3 eulers = Vector3(1.57079633, 0.4712389, 2.70526034);
+
+			Quaternion q = Quaternion(eulers);
+			Vector3 e = q.ToEuler();
+
+			float diff = Vector3::Distance(eulers, e);
+			Assert::IsTrue(diff <= 0.000001f);
 		}
 	};
 }

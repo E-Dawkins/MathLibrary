@@ -44,7 +44,7 @@ Matrix3x3 HELPERS::FindSubMatrix4x4(Matrix4x4 _mat, int _row, int _col)
 
 float HELPERS::FindCofactor4x4(Matrix4x4 _mat, int _row, int _col)
 {
-	return powf(-1.f, (_row + _col + 2)) * FindSubMatrix4x4(_mat, _row, _col).Determinant();
+	return powf(-1.f, (float)(_row + _col + 2)) * FindSubMatrix4x4(_mat, _row, _col).Determinant();
 }
 
 Matrix4x4 HELPERS::FindCofactorMatrix4x4(Matrix4x4 _mat)
@@ -92,7 +92,7 @@ Matrix2x2 HELPERS::FindSubMatrix3x3(Matrix3x3 _mat, int _row, int _col)
 
 float HELPERS::FindCofactor3x3(Matrix3x3 _mat, int _row, int _col)
 {
-	return powf(-1.f, (_row + _col + 2)) * FindSubMatrix3x3(_mat, _row, _col).Determinant();
+	return powf(-1.f, (float)(_row + _col + 2)) * FindSubMatrix3x3(_mat, _row, _col).Determinant();
 }
 
 Matrix3x3 HELPERS::FindCofactorMatrix3x3(Matrix3x3 _mat)
@@ -108,4 +108,19 @@ Matrix3x3 HELPERS::FindCofactorMatrix3x3(Matrix3x3 _mat)
 	}
 
 	return output;
+}
+
+float HELPERS::Clamp(float _value, float _min, float _max)
+{
+	return (_value < _min ? _min : (_value > _max ? _max : _value));
+}
+
+double HELPERS::Clamp(double _value, double _min, double _max)
+{
+	return (_value < _min ? _min : (_value > _max ? _max : _value));
+}
+
+int HELPERS::Clamp(int _value, int _min, int _max)
+{
+	return (_value < _min ? _min : (_value > _max ? _max : _value));
 }
