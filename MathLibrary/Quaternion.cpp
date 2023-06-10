@@ -5,18 +5,21 @@
 
 using namespace HELPERS;
 
+// Constructs quaternion with _scalar real, _vector imaginary
 Quaternion::Quaternion(float _scalar, Vector3 _vector)
 {
 	s = _scalar;
 	v = _vector;
 }
 
+// Copy constructor, copies _value to our components
 Quaternion::Quaternion(const Quaternion& _value)
 {
 	s = _value.s;
 	v = _value.v;
 }
 
+// Constructs a quaternion from euler angles
 Quaternion::Quaternion(Vector3 _euler)
 {
 	double yaw = _euler[0];
@@ -29,16 +32,19 @@ Quaternion::Quaternion(Vector3 _euler)
 	s = cos(roll / 2.0) * cos(pitch / 2.0) * cos(yaw / 2.0) + sin(roll / 2.0) * sin(pitch / 2.0) * sin(yaw / 2.0);
 }
 
+// Returns true if every component == _q
 bool Quaternion::operator==(const Quaternion _q)
 {
 	return s == _q.s && v == _q.v;
 }
 
+// Returns true if any component != _q
 bool Quaternion::operator!=(const Quaternion _q)
 {
 	return s != _q.s || v != _q.v;
 }
 
+// Copy constructor, copies _value to our components and returns this
 Quaternion& Quaternion::operator=(const Quaternion& _value)
 {
 	s = _value.s;
@@ -47,12 +53,14 @@ Quaternion& Quaternion::operator=(const Quaternion& _value)
 	return *this;
 }
 
+// Adds _q to this
 void Quaternion::operator+=(const Quaternion& _q)
 {
 	s += _q.s;
 	v += _q.v;
 }
 
+// Adds _q and this, then returns result
 Quaternion Quaternion::operator+(const Quaternion& _q) const
 {
 	float scalar = s + _q.s;
@@ -61,12 +69,14 @@ Quaternion Quaternion::operator+(const Quaternion& _q) const
 	return Quaternion(scalar, imaginary);
 }
 
+// Subtracts _q from this
 void Quaternion::operator-=(const Quaternion& _q)
 {
 	s -= _q.s;
 	v -= _q.v;
 }
 
+// Subtracts _q and this, then returns result
 Quaternion Quaternion::operator-(const Quaternion _q) const
 {
 	float scalar = s - _q.s;
@@ -75,6 +85,7 @@ Quaternion Quaternion::operator-(const Quaternion _q) const
 	return Quaternion(scalar, imaginary);
 }
 
+// Performs quaternion multiplication between this and _q
 void Quaternion::operator*=(const Quaternion& _q)
 {
 	float scalar = s * _q.s - v.Dot(_q.v);
@@ -84,6 +95,7 @@ void Quaternion::operator*=(const Quaternion& _q)
 	v = imaginary;
 }
 
+// Returns quaternion multiplication of this and _q
 Quaternion Quaternion::operator*(const Quaternion& _q) const
 {
 	float scalar = s * _q.s - v.Dot(_q.v);
@@ -92,17 +104,26 @@ Quaternion Quaternion::operator*(const Quaternion& _q) const
 	return Quaternion(scalar, imaginary);
 }
 
+// Multiplies each component by _value
 void Quaternion::operator*=(const float _value)
 {
 	s *= _value;
 	v *= _value;
 }
 
+// Returns quaternion constructed by this * _value
 Quaternion Quaternion::operator*(const float _value) const
 {
 	return Quaternion(s * _value, v * _value);
 }
 
+// Appends _q to _os
+void operator<<(std::ostream& _os, const Quaternion& _q)
+{
+	_os << "(" << _q.s << ", {" << _q.v.x << ", " << _q.v.y << ", " << _q.v.z << "})";
+}
+
+// Gets magnitude of this quaternion
 float Quaternion::Magnitude()
 {
 	float s2 = s * s;
@@ -111,6 +132,7 @@ float Quaternion::Magnitude()
 	return sqrt(s2 + v2);
 }
 
+// Normalizes this quaternion
 void Quaternion::Normalize()
 {
 	float magnitude = Magnitude();
@@ -122,12 +144,14 @@ void Quaternion::Normalize()
 	}
 }
 
+// Returns this normalized
 Quaternion Quaternion::Normalized()
 {
 	float magnitude = Magnitude();
 	return Quaternion(s / magnitude, v / magnitude);
 }
 
+// Returns this normalized for rotation
 void Quaternion::RNormalize()
 {
 	float angle = Deg2Rad(s);
@@ -136,11 +160,13 @@ void Quaternion::RNormalize()
 	v = v.Normalized() * sinf(angle * 0.5);
 }
 
+// Gets conjugate of this quaternion
 Quaternion Quaternion::Conjugate()
 {
 	return Quaternion(s, v * -1.f);
 }
 
+// Gets inverse of this quaternion
 Quaternion Quaternion::Inverse()
 {
 	float magnitude = Magnitude();
@@ -154,6 +180,7 @@ Quaternion Quaternion::Inverse()
 	return Quaternion(scalar, imaginary);
 }
 
+// Rotates _vector by _angle around _axis
 Vector3 Quaternion::RotateVector(Vector3 _vector, float _angle, Vector3 _axis)
 {
 	// Vector -> Pure Quaternion
@@ -178,6 +205,7 @@ Vector3 Quaternion::RotateVector(Vector3 _vector, float _angle, Vector3 _axis)
 	return rotatedVector.v;
 }
 
+// Converts this quaternion to its' euler representation
 Vector3 Quaternion::ToEuler()
 {
 	float x = v[0];

@@ -117,5 +117,13 @@ namespace QUATERNIONS
 			float diff = Vector3::Distance(eulers, e);
 			Assert::IsTrue(diff <= 0.000001f);
 		}
+
+		TEST_METHOD(OSTREAM)
+		{
+			Quaternion q = Quaternion(1, Vector3(2, 3, 4));
+			std::ostringstream os;
+			os << q;
+			Assert::AreEqual("(1, {2, 3, 4})", os.str().c_str());
+		}
 	};
 }

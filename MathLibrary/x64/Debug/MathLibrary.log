@@ -1,4 +1,24 @@
-﻿D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(35,17): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿D:\Github\MathLibrary\MathLibrary\Matrix2x2.h(61,23): warning C4251: 'Matrix2x2::m_rows': class 'std::vector<Vector2,std::allocator<Vector2>>' needs to have dll-interface to be used by clients of class 'Matrix2x2'
+D:\Github\MathLibrary\MathLibrary\Matrix3x3.h(62,23): warning C4251: 'Matrix3x3::m_rows': class 'std::vector<Vector3,std::allocator<Vector3>>' needs to have dll-interface to be used by clients of class 'Matrix3x3'
+D:\Github\MathLibrary\MathLibrary\Matrix4x4.h(62,23): warning C4251: 'Matrix4x4::m_rows': class 'std::vector<Vector4,std::allocator<Vector4>>' needs to have dll-interface to be used by clients of class 'Matrix4x4'
+D:\Github\MathLibrary\MathLibrary\Matrix2x2.h(61,23): warning C4251: 'Matrix2x2::m_rows': class 'std::vector<Vector2,std::allocator<Vector2>>' needs to have dll-interface to be used by clients of class 'Matrix2x2'
+D:\Github\MathLibrary\MathLibrary\Matrix3x3.h(62,23): warning C4251: 'Matrix3x3::m_rows': class 'std::vector<Vector3,std::allocator<Vector3>>' needs to have dll-interface to be used by clients of class 'Matrix3x3'
+D:\Github\MathLibrary\MathLibrary\Matrix2x2.h(61,23): warning C4251: 'Matrix2x2::m_rows': class 'std::vector<Vector2,std::allocator<Vector2>>' needs to have dll-interface to be used by clients of class 'Matrix2x2'
+D:\Github\MathLibrary\MathLibrary\Matrix4x4.h(62,23): warning C4251: 'Matrix4x4::m_rows': class 'std::vector<Vector4,std::allocator<Vector4>>' needs to have dll-interface to be used by clients of class 'Matrix4x4'
+D:\Github\MathLibrary\MathLibrary\Matrix3x3.h(62,23): warning C4251: 'Matrix3x3::m_rows': class 'std::vector<Vector3,std::allocator<Vector3>>' needs to have dll-interface to be used by clients of class 'Matrix3x3'
+D:\Github\MathLibrary\MathLibrary\Matrix2x2.h(61,23): warning C4251: 'Matrix2x2::m_rows': class 'std::vector<Vector2,std::allocator<Vector2>>' needs to have dll-interface to be used by clients of class 'Matrix2x2'
+D:\Github\MathLibrary\MathLibrary\Matrix3x3.h(62,23): warning C4251: 'Matrix3x3::m_rows': class 'std::vector<Vector3,std::allocator<Vector3>>' needs to have dll-interface to be used by clients of class 'Matrix3x3'
+D:\Github\MathLibrary\MathLibrary\Matrix4x4.h(62,23): warning C4251: 'Matrix4x4::m_rows': class 'std::vector<Vector4,std::allocator<Vector4>>' needs to have dll-interface to be used by clients of class 'Matrix4x4'
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(26,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(27,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(28,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(29,58): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(140,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(141,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(206,29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(206,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\Quaternion.cpp(206,17): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(35,17): warning C4305: 'argument': truncation from 'double' to 'float'
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(76,81): warning C4305: 'argument': truncation from 'double' to 'float'
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(76,70): warning C4305: 'argument': truncation from 'double' to 'float'
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(76,59): warning C4305: 'argument': truncation from 'double' to 'float'
@@ -8,3 +28,4 @@ D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(79,46): warning C4305: 'ar
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(112,52): warning C4305: 'argument': truncation from 'double' to 'float'
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(112,41): warning C4305: 'argument': truncation from 'double' to 'float'
 D:\Github\MathLibrary\MathLibrary\QuaternionTests.cpp(112,29): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Github\MathLibrary\MathLibrary\Vector4.cpp(168): warning C4715: 'Vector4::operator[]': not all control paths return a value

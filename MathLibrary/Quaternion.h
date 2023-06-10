@@ -32,6 +32,8 @@ public:
 	void operator *= (const float _value);
 	Quaternion operator * (const float _value) const;
 
+	friend void operator << (std::ostream& _os, const Quaternion& _q);
+
 	float Magnitude();
 
 	void Normalize();
